@@ -6,7 +6,7 @@ const path = require("node:path");
 const readline = require("node:readline");
 const { spawnSync } = require("node:child_process");
 
-const CONFIG_DIR = process.env.VPS_MANAGE_HOME || path.join(os.homedir(), ".vps-manage");
+const CONFIG_DIR = process.env.SSH_MANAGE_HOME || process.env.VPS_MANAGE_HOME || path.join(os.homedir(), ".ssh-manage");
 const DATA_FILE = path.join(CONFIG_DIR, "servers.json");
 
 const keys = {
@@ -68,17 +68,17 @@ function main() {
 }
 
 function printHelp() {
-  console.log(`vps-manage
+  console.log(`ssh-manage
 
 Usage:
-  vps-manage
+  ssh-manage
   npm start
 
 Keys:
   Up/Down or j/k  Move selection
-  n               Add VPS
-  e               Edit selected VPS
-  d               Delete selected VPS
+  n               Add SSH config
+  e               Edit selected config
+  d               Delete selected config
   c               Copy SSH command
   q               Quit
 
@@ -223,13 +223,13 @@ function openForm(server = null) {
       privateKeyPath: server ? server.privateKeyPath : ""
     }
   };
-  setMessage(server ? "Editing VPS. Enter saves on the last field." : "Adding VPS. Enter saves on the last field.", "info");
+  setMessage(server ? "Editing SSH config. Enter saves on the last field." : "Adding SSH config. Enter saves on the last field.", "info");
 }
 
 function editSelected() {
   const server = state.servers[state.selected];
   if (!server) {
-    setMessage("Nothing to edit yet. Press n to add a VPS.", "warn");
+    setMessage("Nothing to edit yet. Press n to add an SSH config.", "warn");
     return;
   }
   openForm(server);
@@ -305,7 +305,7 @@ function closeForm(message) {
 function copySelectedCommand() {
   const server = state.servers[state.selected];
   if (!server) {
-    setMessage("Nothing to copy yet. Press n to add a VPS.", "warn");
+    setMessage("Nothing to copy yet. Press n to add an SSH config.", "warn");
     return;
   }
 
@@ -353,7 +353,7 @@ function copyToClipboard(text) {
 function render() {
   const lines = [];
   lines.push("\x1b[2J\x1b[H");
-  lines.push(`${colors.bold}VPS Manage${colors.reset} ${colors.dim}${DATA_FILE}${colors.reset}`);
+  lines.push(`${colors.bold}SSH Manage${colors.reset} ${colors.dim}${DATA_FILE}${colors.reset}`);
   lines.push("");
 
   if (state.mode === "form") {
@@ -373,7 +373,7 @@ function render() {
 function renderList() {
   if (state.servers.length === 0) {
     return [
-      `${colors.dim}No VPS entries yet.${colors.reset}`,
+      `${colors.dim}No SSH configs yet.${colors.reset}`,
       "",
       `Press ${colors.bold}n${colors.reset} to add your first server.`
     ].join("\n");
@@ -396,7 +396,7 @@ function renderList() {
 
 function renderForm() {
   const form = state.form;
-  const title = form.editingId ? "Edit VPS" : "Add VPS";
+  const title = form.editingId ? "Edit SSH config" : "Add SSH config";
   const rows = [`${colors.bold}${title}${colors.reset}`, ""];
 
   for (let index = 0; index < fields.length; index += 1) {

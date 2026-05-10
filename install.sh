@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_NAME="vps-manage"
-INSTALL_DIR="${VPS_MANAGE_INSTALL_DIR:-$HOME/.local/bin}"
-APP_DIR="${VPS_MANAGE_APP_DIR:-$HOME/.local/share/$APP_NAME}"
+APP_NAME="ssh-manage"
+INSTALL_DIR="${SSH_MANAGE_INSTALL_DIR:-${VPS_MANAGE_INSTALL_DIR:-$HOME/.local/bin}}"
+APP_DIR="${SSH_MANAGE_APP_DIR:-${VPS_MANAGE_APP_DIR:-$HOME/.local/share/$APP_NAME}}"
 TARGET_BIN="$INSTALL_DIR/$APP_NAME"
-DEFAULT_REPO="shanlan-L/vps-manage"
+DEFAULT_REPO="shanlan-L/ssh-manage"
 DEFAULT_REF="main"
-REPO="${VPS_MANAGE_REPO:-$DEFAULT_REPO}"
-REF="${VPS_MANAGE_REF:-$DEFAULT_REF}"
+REPO="${SSH_MANAGE_REPO:-${VPS_MANAGE_REPO:-$DEFAULT_REPO}}"
+REF="${SSH_MANAGE_REF:-${VPS_MANAGE_REF:-$DEFAULT_REF}}"
 
 if [ -n "${BASH_SOURCE[0]:-}" ] && [ -f "${BASH_SOURCE[0]}" ]; then
   SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -17,8 +17,8 @@ else
 fi
 
 LOCAL_SOURCE_BIN=""
-if [ -n "$SCRIPT_DIR" ] && [ -f "$SCRIPT_DIR/bin/vps-manage.js" ]; then
-  LOCAL_SOURCE_BIN="$SCRIPT_DIR/bin/vps-manage.js"
+if [ -n "$SCRIPT_DIR" ] && [ -f "$SCRIPT_DIR/bin/ssh-manage.js" ]; then
+  LOCAL_SOURCE_BIN="$SCRIPT_DIR/bin/ssh-manage.js"
 fi
 
 if ! command -v node >/dev/null 2>&1; then
@@ -40,9 +40,9 @@ if [ -n "$LOCAL_SOURCE_BIN" ]; then
   cp "$LOCAL_SOURCE_BIN" "$APP_DIR/$APP_NAME.js"
 else
   if command -v curl >/dev/null 2>&1; then
-    curl -fsSL "https://raw.githubusercontent.com/$REPO/$REF/bin/vps-manage.js" -o "$APP_DIR/$APP_NAME.js"
+    curl -fsSL "https://raw.githubusercontent.com/$REPO/$REF/bin/ssh-manage.js" -o "$APP_DIR/$APP_NAME.js"
   elif command -v wget >/dev/null 2>&1; then
-    wget -qO "$APP_DIR/$APP_NAME.js" "https://raw.githubusercontent.com/$REPO/$REF/bin/vps-manage.js"
+    wget -qO "$APP_DIR/$APP_NAME.js" "https://raw.githubusercontent.com/$REPO/$REF/bin/ssh-manage.js"
   else
     echo "Error: curl or wget is required for remote installation." >&2
     exit 1
