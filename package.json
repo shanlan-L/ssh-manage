@@ -1,0 +1,25 @@
+{
+  "name": "vps-manage",
+  "version": "0.1.0",
+  "description": "A local TUI for managing VPS SSH command snippets.",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shanlan-L/vps-manage.git"
+  },
+  "homepage": "https://github.com/shanlan-L/vps-manage#readme",
+  "bugs": {
+    "url": "https://github.com/shanlan-L/vps-manage/issues"
+  },
+  "bin": {
+    "vps-manage": "./bin/vps-manage.js"
+  },
+  "scripts": {
+    "start": "node ./bin/vps-manage.js",
+    "check": "node --check ./bin/vps-manage.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}
