@@ -1,7 +1,7 @@
 {
   "name": "ssh-manage",
   "version": "0.2.0",
-  "description": "A local TUI for managing SSH command snippets.",
+  "description": "A tray-resident Tauri desktop app and local TUI for SSH command snippets.",
   "type": "commonjs",
   "repository": {
     "type": "git",
@@ -16,8 +16,21 @@
   },
   "scripts": {
     "start": "node ./bin/ssh-manage.js",
+    "desktop": "node ./scripts/tauri.mjs dev",
+    "desktop:build": "node ./scripts/tauri.mjs build --bundles app",
+    "desktop:build:dmg": "node ./scripts/tauri.mjs build --bundles dmg",
+    "web:dev": "vite --host 127.0.0.1",
+    "web:build": "vite build",
+    "web:preview": "vite preview --host 127.0.0.1",
     "check": "node --check ./bin/ssh-manage.js",
     "test": "node --test"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.11.1",
+    "vite": "^6.4.3"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.11.4"
   },
   "engines": {
     "node": ">=18"

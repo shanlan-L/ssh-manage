@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "ssh-manage",
+  "version": "0.2.0",
+  "identifier": "com.shanlan.ssh-manage",
+  "mainBinaryName": "ssh-manage",
+  "build": {
+    "beforeDevCommand": "npm run web:dev",
+    "devUrl": "http://127.0.0.1:5173",
+    "beforeBuildCommand": "npm run web:build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "ssh-manage",
+        "width": 1180,
+        "height": 760,
+        "minWidth": 980,
+        "minHeight": 640
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "macOS": {
+      "signingIdentity": "-"
+    },
+    "icon": [
+      "icons-v2/32x32.png",
+      "icons-v2/128x128.png",
+      "icons-v2/128x128@2x.png",
+      "icons-v2/icon.icns",
+      "icons-v2/icon.ico"
+    ]
+  }
+}

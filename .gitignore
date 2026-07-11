@@ -1,7 +1,44 @@
+# JavaScript dependencies and frontend output
 node_modules/
-.DS_Store
-npm-debug.log*
+dist/
+
+# Rust and Tauri generated output
+src-tauri/target/
+src-tauri/gen/
+
+# Keep only desktop bundle icons generated from the source app icon
+src-tauri/icons/icon.png
+src-tauri/icons-v2/*
+!src-tauri/icons-v2/32x32.png
+!src-tauri/icons-v2/128x128.png
+!src-tauri/icons-v2/128x128@2x.png
+!src-tauri/icons-v2/icon.icns
+!src-tauri/icons-v2/icon.ico
+
+# Local app data
+/.ssh-manage/
+/.vps-manage/
+/data.json
+/servers.json
+
+# Local environment, signing, and provisioning files
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.pfx
+*.key
+*.mobileprovision
+
+# Build packages, logs, and temporary files
+*.app/
+*.dmg
 *.tgz
-.vps-manage/
-.ssh-manage/
-servers.json
+*.log
+*.tmp
+*.tmp-*
+npm-debug.log*
+
+# OS metadata
+.DS_Store
