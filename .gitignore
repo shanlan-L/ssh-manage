@@ -1,6 +1,7 @@
 node_modules/
 .DS_Store
 npm-debug.log*
+*.tgz
 .vps-manage/
 .ssh-manage/
 servers.json

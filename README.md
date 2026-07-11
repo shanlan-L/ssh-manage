@@ -1,14 +1,16 @@
 # ssh-manage
 
-`ssh-manage` 是一个本地 CLI/TUI 工具，用来管理 SSH 连接信息，并快速复制生成好的 `ssh` 命令。
+`ssh-manage` 是一个本地 CLI/TUI 工具，用来管理 SSH 连接信息和常用脚本，并快速复制生成好的命令。
 
 它不会直接连接服务器，也不会帮你打开新的终端窗口。推荐的用法是：在 `ssh-manage` 里选中一台服务器，复制命令，然后在另一个终端窗口里粘贴执行。
 
 ## 功能
 
+- 在 `Connections` 和 `Scripts` 两个视图之间快速切换。
 - 管理连接名称、IP/Host、端口、用户名、本地私钥路径。
-- 在终端列表里新增、编辑、删除、浏览 SSH 配置。
-- 一键复制生成好的 SSH 命令。
+- 保存常用命令和多行脚本，并添加名称与说明。
+- 搜索连接、脚本名称、说明和命令内容。
+- 在终端里新增、编辑、删除、浏览并复制内容。
 - 数据只保存在本地 JSON 文件里。
 - 支持通过 GitHub 一行命令安装。
 - 没有运行时 npm 依赖。
@@ -31,6 +33,12 @@ export PATH="$HOME/.local/bin:$PATH"
 
 ```sh
 ssh-manage
+```
+
+查看当前版本：
+
+```sh
+ssh-manage --version
 ```
 
 ## 环境要求
@@ -70,15 +78,32 @@ SSH_MANAGE_HOME=/tmp/ssh-manage-debug npm start
 npm run check
 ```
 
+运行测试：
+
+```sh
+npm test
+```
+
 ## 快捷键
 
-- `n`：新增 SSH 配置
-- `e`：编辑当前选中的配置
-- `d`：删除当前选中的配置
-- `c` 或 `Enter`：复制当前配置的 SSH 命令
+- `Tab`：切换 `Connections` / `Scripts` 视图
+- `/`：搜索当前视图，`Esc` 清除搜索
+- `?`：打开完整快捷键帮助
+- `n`：新增连接或脚本
+- `e`：编辑当前选中的内容
+- `d`：删除当前选中的内容
+- `c` 或 `Enter`：复制当前选中的命令
 - `j` / `k` 或方向键：移动选择
 - `Esc`：取消新增、编辑或删除确认
 - `q`：退出
+
+编辑表单时：
+
+- `Tab` 或上下方向键：切换字段
+- 左右方向键：移动输入光标
+- `Ctrl+U`：清空当前字段
+- `Ctrl+J`：在脚本命令中插入换行
+- `Enter`：进入下一个字段，在最后一个字段保存
 
 ## SSH 命令格式
 
@@ -101,7 +126,7 @@ ssh -p 22 root@203.0.113.10
 默认数据文件：
 
 ```text
-~/.ssh-manage/servers.json
+~/.ssh-manage/data.json
 ```
 
 可以通过 `SSH_MANAGE_HOME` 指定其他配置目录：
@@ -109,6 +134,15 @@ ssh -p 22 root@203.0.113.10
 ```sh
 SSH_MANAGE_HOME=/path/to/config ssh-manage
 ```
+
+连接和脚本保存在同一个版本化 JSON 文件里。首次启动新版时，工具会自动读取并迁移下面的旧数据文件：
+
+```text
+~/.ssh-manage/servers.json
+~/.vps-manage/servers.json
+```
+
+迁移后不会主动删除旧文件。确认新版数据正常后，可以自行清理旧目录。
 
 为了兼容旧版本，`VPS_MANAGE_HOME` 也仍然可用，但新配置建议使用 `SSH_MANAGE_HOME`。
 
@@ -193,7 +227,8 @@ curl -fsSL https://raw.githubusercontent.com/shanlan-L/ssh-manage/master/install
 
 ## 安全说明
 
-- `ssh-manage` 不会主动发起 SSH 连接。
+- `ssh-manage` 不会主动发起 SSH 连接，也不会执行保存的脚本。
 - 只有按下复制快捷键时，才会把命令写入剪贴板。
 - 工具只保存私钥路径字符串，不读取私钥文件内容。
-- 如果主机名、用户名或私钥路径也算敏感信息，请保护好 `~/.ssh-manage/servers.json`。
+- 数据文件使用仅当前用户可读写的权限保存。
+- 如果主机名、用户名、私钥路径或脚本内容也算敏感信息，请保护好 `~/.ssh-manage/data.json`。

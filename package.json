@@ -1,6 +1,6 @@
 {
   "name": "ssh-manage",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A local TUI for managing SSH command snippets.",
   "type": "commonjs",
   "repository": {
@@ -16,7 +16,8 @@
   },
   "scripts": {
     "start": "node ./bin/ssh-manage.js",
-    "check": "node --check ./bin/ssh-manage.js"
+    "check": "node --check ./bin/ssh-manage.js",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=18"
